@@ -1,6 +1,7 @@
 // packages needed for this application
 const inquirer = require('inquirer');
-const fs = require('fs')
+const fs = require('fs');
+const managerTemplateData = require('./manager-template');
 
 // create array of questions for manager
 const promptManagerInfo = () => {
@@ -95,6 +96,19 @@ const employeeInfoPrompt = () => {
       }
     },
     {
+      type: 'input',
+      name: 'employeeId',
+      message: 'What is the employee ID?',
+      validate: employeeIdInput => {
+        if (employeeIdInput) {
+          return true;
+        } else {
+          console.log('Please enter the employee ID')
+          return false;
+        }
+      }
+    },
+    {
       type: 'list',
       name: 'employeeJobClass',
       message: 'What position does this employee hold?',
@@ -152,10 +166,10 @@ function addEmployee(employees = []) {
     if(employeeNextStep === "Add Employee") {
       addEmployee([...employeesList, employeeInformation])
     } else if (employeeNextStep === "Build HTML Page") {
-      // newHtmlPage();
-      console.log('Building HTML')
       employeesList.push(employeeInformation)
       console.log(employeesList)
+       // newHtmlPage();
+      console.log('Building HTML')
     }
   })
 
@@ -175,8 +189,8 @@ function init() {
     }
     
 
-    // const newHtmlPage = templateData(managerInformation);
-    //this prints the manager responses
+    const newHtmlPage = managerTemplateData()
+    // this prints the manager responses
   
   })
 }
