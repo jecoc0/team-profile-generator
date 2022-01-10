@@ -189,7 +189,7 @@ function init() {
     }
     
 
-    const newHtmlPage = managerTemplate
+    const newHtmlPage = managerTemplateData()
     // this prints the manager responses
   
   })
