@@ -1,14 +1,14 @@
 // packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const managerTemplateData = require('./manager-template');
+const pageTemplate = require('../src/page-template')
 
 // create array of questions for manager
 const promptManagerInfo = () => {
   return inquirer.prompt([
     {
       type: 'input',
-      name: 'managerName', 
+      name: 'managerName',
       message: 'What is the name of your team manager? (Required)',
       validate: managerNameInput => {
         if (managerNameInput) {
@@ -22,7 +22,7 @@ const promptManagerInfo = () => {
     {
       type: 'input',
       name: 'managerId',
-      message: 'What is your manager ID! (Required)',
+      message: 'What is your manager ID? (Required)',
       validate: managerIdInput => {
         if (managerIdInput) {
           return true;
@@ -34,7 +34,7 @@ const promptManagerInfo = () => {
     },
     {
       type: 'input',
-      name: 'managerEmail', 
+      name: 'managerEmail',
       message: 'What is the manager email? (Required)',
       validate: managerEmailInput => {
         if (managerEmailInput) {
@@ -47,7 +47,7 @@ const promptManagerInfo = () => {
     },
     {
       type: 'input',
-      name: 'managerOffice', 
+      name: 'managerOffice',
       message: 'What is the manager office number? (Required)',
       validate: managerOfficeInput => {
         if (managerOfficeInput) {
@@ -118,9 +118,9 @@ const employeeInfoPrompt = () => {
       type: 'input',
       name: 'employeeGithub',
       message: 'What is the employee GitHub username?',
-      when: ({employeeJobClass}) => employeeJobClass === "Engineer",
+      when: ({ employeeJobClass }) => employeeJobClass === "Engineer",
       validate: employeeGitHubInput => {
-        if(employeeGitHubInput) {
+        if (employeeGitHubInput) {
           return true;
         } else {
           console.log('Please enter employee GitHub username')
@@ -131,7 +131,7 @@ const employeeInfoPrompt = () => {
       type: 'input',
       name: 'internSchool',
       message: 'What is the school attended?',
-      when: ({employeeJobClass}) => employeeJobClass === "Intern",
+      when: ({ employeeJobClass }) => employeeJobClass === "Intern",
       validate: internSchoolInput => {
         if (internSchoolInput) {
           return true;
@@ -151,50 +151,50 @@ const employeeInfoPrompt = () => {
 }
 
 // This function is a recursive function because it calls itself
-function addEmployee(employees = []) {
-  console.log("employees", employees)
-  
+function addEmployee(team = []) {
 
-  const employeesList = [...employees]
-  console.log("employee list", employeesList)
+  // since this is a recursive function, we need to spread the existing array each time this function calls itself.
+  const employeesList = [...team]
   employeeInfoPrompt()
-  .then(employeeInformation => {
-    // nextStep conflicts with our previous instance of nextStep
-    // to rename on the spot, use previous name (nextStep), COLON new name,
-    // as seen in { nextStep: employeeNextStep} below
-    const { nextStep: employeeNextStep } = employeeInformation;
-    if(employeeNextStep === "Add Employee") {
-      addEmployee([...employeesList, employeeInformation])
-    } else if (employeeNextStep === "Build HTML Page") {
-      employeesList.push(employeeInformation)
-      console.log(employeesList)
-       // newHtmlPage();
-      console.log('Building HTML')
-    }
-  })
+    .then(employeeInformation => {
 
+      const { nextStep: employeeNextStep } = employeeInformation;
+      if (employeeNextStep === "Add Employee") {
+
+        // recursive function call
+        addEmployee([...employeesList, employeeInformation])
+      } else if (employeeNextStep === "Build HTML Page") {
+        buildHtmlPage([...employeesList, employeeInformation])
+      }
+    })
+}
+
+function buildHtmlPage(employees = []) {
+  const htmlPage = pageTemplate(employees)
+  fs.writeFile("team.html", htmlPage, (err) => {
+    if (err) console.log(err);
+    else {
+      console.log("File was written successfully");
+    }
+  });
 }
 
 function init() {
   promptManagerInfo()
-  .then(managerInformation => {
-    const { nextStep } = managerInformation;
+    .then(managerInformation => {
+      // we need to add the employeeJobClass to the manager because we didn't assign this when we were asking manager questions
+      managerInformation.employeeJobClass = 'manager'
 
-    if(nextStep === "Add Employee") {
-      addEmployee()
-      
-    } else if (nextStep === "Build HTML Page") {
-      // newHtmlPage();
-      console.log('Building HTML')
-    }
-    
-
-    const newHtmlPage = managerTemplateData()
-    // this prints the manager responses
-  
-  })
+      const { nextStep } = managerInformation;
+      if (nextStep === "Add Employee") {
+        addEmployee([managerInformation])
+      } else if (nextStep === "Build HTML Page") {
+        //since buildHtmlPage requires and Array for the parameter, we are just wrapping the object here in an array
+        buildHtmlPage([managerInformation])
+      }
+    })
 }
 
-// employeeInfoPrompt();
+
 
 init();
