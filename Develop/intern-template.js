@@ -1,5 +1,5 @@
 module.exports = internTemplateData => {
-  const { employeeName, employeeId, employeeEmail, internSchool }
+  const { employeeName, employeeId, employeeEmail, internSchool } = internTemplateData
   return `
 
     <div class="p-2 border border-warning mt-3 p-3">
