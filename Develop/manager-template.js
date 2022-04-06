@@ -1,6 +1,6 @@
 module.exports = templateData => {
-  const { managerName, managerId, managerEmail, managerOffice }
-return `
+  const { managerName, managerId, managerEmail, managerOffice } = templateData
+  return `
   
 <!DOCTYPE html>
 <html lang="en">
