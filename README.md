@@ -13,14 +13,14 @@ As a manager, I want to easily create an HTML page with each of my employee's in
 ## Test
 
 ## Deployed 
-- [Demo Video] (https://drive.google.com/drive/u/0/folders/1oWZujGFpiQ9uhTkbQdrw0PPxWtSzomX0)
+- [Demo Video] (https://drive.google.com/file/d/1Vdfp5MUXSGk_Bs3PnsWWrsQqGCLYzvR1/view)
 - [GitHub Pages site] (https://jecoc0.github.io/team-profile-generator/)
 - [GitHub Repo] (https://github.com/jecoc0/team-profile-generator)
 
 ## License
 MIT License
 
-Copyright (c) [2021] [Jessica Groves]
+Copyright (c) [2022] [Jessica Groves]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
