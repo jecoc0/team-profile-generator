@@ -1,7 +1,8 @@
 // packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const pageTemplate = require('../src/page-template')
+const pageTemplate = require('../src/page-template');
+const Manager = require('../lib/Manager');
 
 // create array of questions for manager
 const promptManagerInfo = () => {
@@ -182,6 +183,9 @@ function buildHtmlPage(employees = []) {
 function init() {
   promptManagerInfo()
     .then(managerInformation => {
+      const { managerName, managerId, managerEmail, managerOffice } = managerInformation
+      const manager = new Manager(managerName, managerId, managerEmail, managerOffice)
+      console.log('manager name from class', manager.getName())
       // we need to add the employeeJobClass to the manager because we didn't assign this when we were asking manager questions
       managerInformation.employeeJobClass = 'manager'
 

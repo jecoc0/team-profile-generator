@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node ./Develop/index.js"
   },
   "repository": {
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jecoc0/team-profile-generator/issues"
   },
-  "homepage": "https://github.com/jecoc0/team-profile-generator#readme"
+  "homepage": "https://github.com/jecoc0/team-profile-generator#readme",
+  "dependencies": {
+    "jest": "^27.5.1"
+  }
 }
