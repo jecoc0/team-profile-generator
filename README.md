@@ -11,7 +11,8 @@ As a manager, I want to easily create an HTML page with each of my employee's in
 - To begin the prompt for questions, type node index.js in the command line
 
 ## Test
-
+  Tests are created using Jest.
+  type npm run test in the terminal to run test suite.
 ## Deployed 
 - [Demo Video] (https://drive.google.com/file/d/1Vdfp5MUXSGk_Bs3PnsWWrsQqGCLYzvR1/view)
 - [GitHub Pages site] (https://jecoc0.github.io/team-profile-generator/)
